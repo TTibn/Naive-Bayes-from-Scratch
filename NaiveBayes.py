@@ -1,10 +1,10 @@
 
 """
 @author: TT
+# Data Source link for email messages  
 """
 import os
 import math
-#import random
 #dir = '..............'  File Path
 dic_legit = {} 
 dic_spam = {} 
@@ -59,26 +59,19 @@ def predict(path_new):
             log_p_spam = 0.0
             log_p_legit = 0.0
 
-            for word in dic_all:
-                
+            for word in dic_all:  
                 p_spam = prob_spam_word(word)
                 p_legit = prob_legit_word(word)
                 
-                if word in dic_test:
-                    
+                if word in dic_test: 
                     log_p_spam += math.log(p_spam)
-                    
-                    log_p_legit += math.log(p_legit)
-                    
+                    log_p_legit += math.log(p_legit)       
                 else:
                     log_p_spam += math.log(1 - p_spam)
-                    
                     log_p_legit += math.log(1 - p_legit)
                            
             p_if_spam = (math.exp(log_p_spam))
-
             p_if_legit = (math.exp(log_p_legit))
-
             return (p_if_spam / (p_if_spam + p_if_legit))
 
 #****** Train Function ***####
@@ -97,15 +90,12 @@ def loopDir(path):
     
     for root, dirs, files in os.walk(path):
         for name in files:
-            
-            
+
             if (name.__contains__("legit")):
-                count_legit += 1
-               
+                count_legit += 1  
                 file_path = f"{root}\{name}"
                 
-                with open(file_path, 'r') as f:
-                    
+                with open(file_path, 'r') as f:               
                     for line in f:
                         for word in line.split():
                             if word not in excluded_word:    
@@ -125,8 +115,7 @@ def loopDir(path):
                 count_spam += 1
                 file_path = f"{root}\{name}"
                 
-                with open(file_path, 'r') as f:
-                    
+                with open(file_path, 'r') as f:  
                     for line in f:
                         for word in line.split():
                             if word not in excluded_word:    
